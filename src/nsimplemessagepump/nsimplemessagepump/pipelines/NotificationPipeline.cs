@@ -3,13 +3,13 @@ using nsimplemessagepump.messagecontext;
 
 namespace nsimplemessagepump.pipelines
 {
-    class NotificationHandlerPipeline : IHandlerPipeline
+    class NotificationPipeline : IPipeline
     {
         private readonly IMessagePump _pump;
         private readonly Func<IMessage, IMessageContext> _load;
         private readonly Func<IMessage, IMessageContext, Command[]> _process;
 
-        public NotificationHandlerPipeline(IMessagePump pump, Func<IMessage, IMessageContext> load, Func<IMessage, IMessageContext, Command[]> process) {
+        public NotificationPipeline(IMessagePump pump, Func<IMessage, IMessageContext> load, Func<IMessage, IMessageContext, Command[]> process) {
             _pump = pump;
             _load = load;
             _process = process;

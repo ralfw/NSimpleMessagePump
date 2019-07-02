@@ -6,20 +6,11 @@ namespace nsimplemessagepump
 {
     public interface IMessagePump
     {
-        void Register<TMessage>(Func<IMessage, IMessageContext> load,
-                                Func<IMessage, IMessageContext, (CommandStatus,Event[])> processCommand, 
-                                Action<Event[]> update);
+        void Register<TMessage>(Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus,Event[],string)> processCommand, Action<Event[],string,long> update);
+        void Register<TMessage>(Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus,Event[],string,Notification[])> processCommand, Action<Event[],string,long> update);
+        void Register<TMessage>(Func<IMessage, IMessageContext> load, Func<IMessage, IMessageContext, QueryResult> processQuery);
+        void Register<TMessage>(Func<IMessage, IMessageContext> load, Func<IMessage, IMessageContext, Command[]> processNotification);
         
-        void Register<TMessage>(Func<IMessage, IMessageContext> load,
-                                Func<IMessage, IMessageContext, (CommandStatus,Event[],Notification[])> processCommand, 
-                                Action<Event[]> update);
-        
-        void Register<TMessage>(Func<IMessage, IMessageContext> load,
-                                Func<IMessage, IMessageContext, QueryResult> processQuery);
-        
-        void Register<TMessage>(Func<IMessage, IMessageContext> load,
-                                Func<IMessage, IMessageContext, Command[]> processNotification);
-
         IMessage Handle(IMessage inputMessage);
     }
 }
