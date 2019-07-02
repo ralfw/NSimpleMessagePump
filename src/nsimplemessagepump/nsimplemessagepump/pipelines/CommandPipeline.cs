@@ -6,7 +6,6 @@ namespace nsimplemessagepump.pipelines
 {
     class CommandPipeline : IPipeline
     {
-        private readonly IMessagePump _pump;
         private readonly IEventstore _es;
         private readonly Func<IMessage, (IMessageContext,string)> _load;
         private readonly Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string, Notification[])> _process;
@@ -14,8 +13,8 @@ namespace nsimplemessagepump.pipelines
 
 
         // ctor for processor which does not generate notifications
-        public CommandPipeline(IMessagePump pump, IEventstore es, Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string)> process, Action<Event[], string, long> update)
-            : this(pump, es, 
+        public CommandPipeline(IEventstore es, Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string)> process, Action<Event[], string, long> update)
+            : this(es, 
                    load, 
                    (msg, ctx, version) => {
                        var (status, events, expectedVersion) = process(msg, ctx, version);
@@ -24,9 +23,8 @@ namespace nsimplemessagepump.pipelines
                    update) {}
         
         // ctor for processor which generates notifications
-        public CommandPipeline(IMessagePump pump, IEventstore es, Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string, Notification[])> process, Action<Event[], string, long> update)
+        public CommandPipeline(IEventstore es, Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string, Notification[])> process, Action<Event[], string, long> update)
         {
-            _pump = pump;
             _es = es;
             _load = load;
             _process = process;
@@ -34,13 +32,12 @@ namespace nsimplemessagepump.pipelines
         }
             
         
-        public Response Handle(IMessage msg) {
+        public (Response, Notification[]) Handle(IMessage msg) {
             var (ctx, loadedVersion) = _load(msg);
             var (status, events, expectedVersion, notifications) = _process(msg, ctx, loadedVersion);
             var (version, finalEventNumber) =_es.Record(events, expectedVersion); //TODO: handle ES version conflict
             _update(events, version, finalEventNumber);
-            foreach (var notification in notifications) _pump.Handle(notification);
-            return status;
+            return (status, notifications);
         }
     }
 }
