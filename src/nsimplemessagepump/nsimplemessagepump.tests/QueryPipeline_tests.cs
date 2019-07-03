@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using nsimplemessagepump.messagecontext;
 using nsimplemessagepump.pipelines;
 using Xunit;
