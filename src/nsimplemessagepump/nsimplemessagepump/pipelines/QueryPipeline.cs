@@ -5,10 +5,10 @@ namespace nsimplemessagepump.pipelines
 {
     class QueryPipeline : IPipeline
     {
-        private readonly Func<IMessage, (IMessageContext,string)> _load;
-        private readonly Func<IMessage, IMessageContext, QueryResult> _process;
+        private readonly LoadContext _load;
+        private readonly ProcessQuery _process;
 
-        public QueryPipeline(Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, QueryResult> process) {
+        public QueryPipeline(LoadContext load, ProcessQuery process) {
             _load = load;
             _process = process;
         }

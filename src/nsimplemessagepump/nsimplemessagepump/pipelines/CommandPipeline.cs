@@ -7,13 +7,13 @@ namespace nsimplemessagepump.pipelines
     class CommandPipeline : IPipeline
     {
         private readonly IEventstore _es;
-        private readonly Func<IMessage, (IMessageContext,string)> _load;
-        private readonly Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string, Notification[])> _process;
-        private readonly Action<Event[],string,long> _update;
+        private readonly LoadContext _load;
+        private readonly ProcessCommand _process;
+        private readonly UpdateContext _update;
 
 
         // ctor for processor which does not generate notifications
-        public CommandPipeline(IEventstore es, Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string)> process, Action<Event[], string, long> update)
+        public CommandPipeline(IEventstore es, LoadContext load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string)> process, UpdateContext update)
             : this(es, 
                    load, 
                    (msg, ctx, version) => {
@@ -23,7 +23,7 @@ namespace nsimplemessagepump.pipelines
                    update) {}
         
         // ctor for processor which generates notifications
-        public CommandPipeline(IEventstore es, Func<IMessage, (IMessageContext,string)> load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string, Notification[])> process, Action<Event[], string, long> update)
+        public CommandPipeline(IEventstore es, LoadContext load, ProcessCommand process, UpdateContext update)
         {
             _es = es;
             _load = load;

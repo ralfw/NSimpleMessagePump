@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using nsimpleeventstore;
 using Xunit;
 
@@ -25,13 +26,13 @@ namespace nsimplemessagepump.tests
 
         private int[] _counters;
 
-        void Subscribe1(Event[] events, string version, long finalEventNumber)
+        void Subscribe1(IEnumerable<Event> events, string version, long finalEventNumber)
         {
             _counters[0]++;
         }
         
         
-        void Subscribe2(Event[] events, string version, long finalEventNumber)
+        void Subscribe2(IEnumerable<Event> events, string version, long finalEventNumber)
         {
             _counters[1]++;
         }
