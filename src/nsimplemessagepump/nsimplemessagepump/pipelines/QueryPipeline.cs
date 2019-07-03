@@ -13,7 +13,7 @@ namespace nsimplemessagepump.pipelines
             _process = process;
         }
             
-        public (Response,Notification[]) Handle(IMessage msg) {
+        public (Response Msg, Notification[] Notifications) Handle(IMessage msg) {
             var (ctx,_) = _load(msg);
             var result = _process(msg, ctx);
             return (result, new Notification[0]);

@@ -34,7 +34,7 @@ namespace nsimplemessagepump
             => _pipelines[typeof(TMessage)] = new NotificationPipeline(this, load, processNotification);
 
 
-        public (IMessage, Notification[]) Handle(IMessage inputMessage)
+        public (Response Msg, Notification[] Notifications) Handle(IIncoming inputMessage)
             => _pipelines[inputMessage.GetType()].Handle(inputMessage);
     }
 

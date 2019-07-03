@@ -12,6 +12,6 @@ namespace nsimplemessagepump
         void Register<TMessage>(LoadContext load, ProcessQuery process);
         void Register<TMessage>(LoadContext load, ProcessNotification process);
         
-        (IMessage, Notification[]) Handle(IMessage inputMessage);
+        (Response Msg, Notification[] Notifications) Handle(IIncoming inputMessage);
     }
 }

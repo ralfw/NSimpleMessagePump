@@ -10,6 +10,6 @@ namespace nsimplemessagepump.pipelines
     
     interface IPipeline
     {
-        (Response, Notification[]) Handle(IMessage msg);
+        (Response Msg, Notification[] Notifications) Handle(IMessage msg);
     }
 }

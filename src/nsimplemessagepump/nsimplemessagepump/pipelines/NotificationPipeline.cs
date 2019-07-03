@@ -15,7 +15,7 @@ namespace nsimplemessagepump.pipelines
             _process = process;
         }
             
-        public (Response,Notification[]) Handle(IMessage msg) {
+        public (Response Msg, Notification[] Notifications) Handle(IMessage msg) {
             var (ctx,_) = _load(msg);
             var commands = _process(msg, ctx);
             foreach (var cmd in commands) _pump.Handle(cmd);

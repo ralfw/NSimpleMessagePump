@@ -32,7 +32,7 @@ namespace nsimplemessagepump.pipelines
         }
             
         
-        public (Response, Notification[]) Handle(IMessage msg) {
+        public (Response Msg, Notification[] Notifications) Handle(IMessage msg) {
             var (ctx, loadedVersion) = _load(msg);
             var (status, events, expectedVersion, notifications) = _process(msg, ctx, loadedVersion);
             var (version, finalEventNumber) =_es.Record(events, expectedVersion); //TODO: handle ES version conflict
