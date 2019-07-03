@@ -42,8 +42,7 @@ namespace nsimplemessagepump.tests
                 return (new MyQueryCtx {Foo = "ctx"}, "");
             }
 
-            Command[] processNotification(IMessage msg, IMessageContext ctx)
-            {
+            Command[] processNotification(IMessage msg, IMessageContext ctx) {
                 log.Add("process-" + ((MyNotification)msg).Bar);
                 log.Add(((MyQueryCtx)ctx).Foo);
                 return new[] {new MyCommand(), (Command) new YourCommand()};

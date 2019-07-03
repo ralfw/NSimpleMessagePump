@@ -7,25 +7,21 @@ using Xunit;
 namespace nsimplemessagepump.tests
 {
     public class QueryPipeline_tests {
-        class MyQuery : Query
-        {
+        class MyQuery : Query {
             public string Bar;
         }
 
-        class MyQueryResult : QueryResult
-        {
+        class MyQueryResult : QueryResult {
             public string Baz;
         }
 
-        class MyQueryCtx : IMessageContext
-        {
+        class MyQueryCtx : IMessageContext  {
             public string Foo;
         }
         
         
         [Fact]
-        public void Run()
-        {
+        public void Run() {
             var log = new List<string>();
             var sut = new QueryPipeline(loadContext, processQuery);
 
@@ -41,8 +37,7 @@ namespace nsimplemessagepump.tests
                 return (new MyQueryCtx {Foo = "ctx"}, "");
             }
 
-            QueryResult processQuery(IMessage msg, IMessageContext ctx)
-            {
+            QueryResult processQuery(IMessage msg, IMessageContext ctx) {
                 log.Add("process-" + ((MyQuery)msg).Bar);
                 log.Add(((MyQueryCtx)ctx).Foo);
                 return new MyQueryResult{Baz = "result"};
