@@ -63,7 +63,28 @@ namespace nsimplemessagepump.tests
         class MockPump : IMessagePump
         {
             public List<Command> Commands = new List<Command>();
-            
+
+            public void Register<TMessage>(IMessageContextModelManager ctxModelManager, Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> processCommand)
+            {}
+
+            public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ProcessCommand processCommand)
+            {}
+
+            public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ICommandProcessor processor)
+            {}
+
+            public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ProcessQuery processQuery)
+            {}
+
+            public void Register<TMessage>(IMessageContextModelManager ctxModelManager, IQueryProcessor processor)
+            {}
+
+            public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ProcessNotification processNotification)
+            {}
+
+            public void Register<TMessage>(IMessageContextModelManager ctxModelManager, INotificationProcessor processor)
+            {}
+
             public void Register<TMessage>(LoadContextModel load, Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> processCommand, UpdateContextModel update) {}
             public void Register<TMessage>(LoadContextModel load, ProcessCommand processCommand, UpdateContextModel update){}
             public void Register<TMessage>(LoadContextModel load, ProcessQuery process, UpdateContextModel update){}

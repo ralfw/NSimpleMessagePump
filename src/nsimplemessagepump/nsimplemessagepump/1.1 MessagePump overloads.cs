@@ -6,7 +6,7 @@ using nsimplemessagepump.pipeline.processors;
 
 namespace nsimplemessagepump
 {
-    public partial class MessagePump
+    public partial class MessagePump : IMessagePump
     {
         public void Register<TMessage>(IMessageContextModelManager ctxModelManager, Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> processCommand)
             => Register<TMessage>(ctxModelManager.Load, processCommand, ctxModelManager.Update);
