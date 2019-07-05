@@ -106,7 +106,7 @@ namespace nsimplemessagepump.tests
             public (string Version, Event[] Events) Replay(long firstEventNumber, params Type[] eventTypes) { throw new NotImplementedException(); }
 
             public (string Version, long FinalEventNumber) State { get; }
-            public event Action<(string Version, long FinalEventNumber, Event[] Events)> OnRecorded;
+            public event Action<string, long, Event[]> OnRecorded;
         }
     }
 }
