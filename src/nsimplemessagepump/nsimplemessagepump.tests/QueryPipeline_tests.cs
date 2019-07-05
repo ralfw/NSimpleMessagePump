@@ -8,39 +8,34 @@ namespace nsimplemessagepump.tests
 {
     public class QueryPipeline_tests {
         class MyQuery : Query {
-            public string Bar;
+            public string Prefix;
         }
 
         class MyQueryResult : QueryResult {
-            public string Baz;
+            public string Value;
         }
 
         class MyQueryCtx : IMessageContext  {
-            public string Foo;
+            public string Value;
         }
         
         
         [Fact]
         public void Run() {
-            var log = new List<string>();
             var sut = new QueryPipeline(loadContext, processQuery);
 
-            var result = sut.Handle(new MyQuery{Bar = "query"});
+            var result = sut.Handle(new MyQuery{Prefix = ":"});
             
-            Assert.Equal("result", ((MyQueryResult)result.Msg).Baz);
+            Assert.Equal(":foo", ((MyQueryResult)result.Msg).Value);
             Assert.Empty(result.Notifications);
-            Assert.Equal(new[]{"load-query","process-query","ctx"}, log);
 
 
             (IMessageContext Ctx, string Version) loadContext(IMessage msg) {
-                log.Add("load-" + ((MyQuery)msg).Bar);
-                return (new MyQueryCtx {Foo = "ctx"}, "");
+                return (new MyQueryCtx {Value = "foo"}, "");
             }
 
             QueryResult processQuery(IMessage msg, IMessageContext ctx) {
-                log.Add("process-" + ((MyQuery)msg).Bar);
-                log.Add(((MyQueryCtx)ctx).Foo);
-                return new MyQueryResult{Baz = "result"};
+                return new MyQueryResult{Value = (msg as MyQuery).Prefix + (ctx as MyQueryCtx).Value};
             }
         }
     }
