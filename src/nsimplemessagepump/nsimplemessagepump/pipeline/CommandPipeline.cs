@@ -2,18 +2,18 @@ using System;
 using nsimpleeventstore;
 using nsimplemessagepump.messagecontext;
 
-namespace nsimplemessagepump.pipelines
+namespace nsimplemessagepump.pipeline
 {
     class CommandPipeline : IPipeline
     {
         private readonly IEventstore _es;
-        private readonly LoadContext _load;
+        private readonly LoadContextModel _load;
         private readonly ProcessCommand _process;
-        private readonly UpdateContext _update;
+        private readonly UpdateContextModel _update;
 
 
         // ctor for processor which does not generate notifications
-        public CommandPipeline(IEventstore es, LoadContext load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string)> process, UpdateContext update)
+        public CommandPipeline(IEventstore es, LoadContextModel load, Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> process, UpdateContextModel update)
             : this(es, 
                    load, 
                    (msg, ctx, version) => {
@@ -23,7 +23,7 @@ namespace nsimplemessagepump.pipelines
                    update) {}
         
         // ctor for processor which generates notifications
-        public CommandPipeline(IEventstore es, LoadContext load, ProcessCommand process, UpdateContext update)
+        public CommandPipeline(IEventstore es, LoadContextModel load, ProcessCommand process, UpdateContextModel update)
         {
             _es = es;
             _load = load;

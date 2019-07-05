@@ -1,16 +1,16 @@
 using System;
 using nsimpleeventstore;
 using nsimplemessagepump.messagecontext;
-using nsimplemessagepump.pipelines;
+using nsimplemessagepump.pipeline;
 
 namespace nsimplemessagepump
 {
     public interface IMessagePump
     {
-        void Register<TMessage>(LoadContext load, Func<IMessage, IMessageContext, string, (CommandStatus,Event[],string)> processCommand, UpdateContext update);
-        void Register<TMessage>(LoadContext load, ProcessCommand processCommand, UpdateContext update);
-        void Register<TMessage>(LoadContext load, ProcessQuery process);
-        void Register<TMessage>(LoadContext load, ProcessNotification process);
+        void Register<TMessage>(LoadContextModel load, Func<IMessage, IMessageContextModel, string, (CommandStatus,Event[],string)> processCommand, UpdateContextModel update);
+        void Register<TMessage>(LoadContextModel load, ProcessCommand processCommand, UpdateContextModel update);
+        void Register<TMessage>(LoadContextModel load, ProcessQuery process, UpdateContextModel update);
+        void Register<TMessage>(LoadContextModel load, ProcessNotification process, UpdateContextModel update);
         
         (Response Msg, Notification[] Notifications) Handle(IIncoming inputMessage);
     }

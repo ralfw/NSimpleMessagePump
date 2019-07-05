@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using nsimplemessagepump.messagecontext;
-using nsimplemessagepump.pipelines;
+using nsimplemessagepump.pipeline;
 using Xunit;
 
 namespace nsimplemessagepump.tests
@@ -15,7 +15,7 @@ namespace nsimplemessagepump.tests
             public string Value;
         }
 
-        class MyQueryCtx : IMessageContext  {
+        class MyQueryCtx : IMessageContextModel  {
             public string Value;
         }
         
@@ -30,11 +30,11 @@ namespace nsimplemessagepump.tests
             Assert.Empty(result.Notifications);
 
 
-            (IMessageContext Ctx, string Version) loadContext(IMessage msg) {
+            (IMessageContextModel Ctx, string Version) loadContext(IMessage msg) {
                 return (new MyQueryCtx {Value = "foo"}, "");
             }
 
-            QueryResult processQuery(IMessage msg, IMessageContext ctx) {
+            QueryResult processQuery(IMessage msg, IMessageContextModel ctx) {
                 return new MyQueryResult{Value = (msg as MyQuery).Prefix + (ctx as MyQueryCtx).Value};
             }
         }

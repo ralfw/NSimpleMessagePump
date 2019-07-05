@@ -3,9 +3,9 @@ using nsimpleeventstore;
 
 namespace nsimplemessagepump.messagecontext
 {
-    public delegate void UpdateContext(Event[] events, string version, long finalEventNumber);
+    public delegate void UpdateContextModel(Event[] events, string version, long finalEventNumber);
     
-    public interface IMessageContextBuilder {
+    public interface IMessageContextModelBuilder {
         void Update(Event[] events, string version, long finalEventNumber);
     }
 }

@@ -1,14 +1,14 @@
 using System;
 using nsimplemessagepump.messagecontext;
 
-namespace nsimplemessagepump.pipelines
+namespace nsimplemessagepump.pipeline
 {
     class QueryPipeline : IPipeline
     {
-        private readonly LoadContext _load;
+        private readonly LoadContextModel _load;
         private readonly ProcessQuery _process;
 
-        public QueryPipeline(LoadContext load, ProcessQuery process) {
+        public QueryPipeline(LoadContextModel load, ProcessQuery process) {
             _load = load;
             _process = process;
         }

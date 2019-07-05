@@ -1,15 +1,15 @@
 using System;
 using nsimplemessagepump.messagecontext;
 
-namespace nsimplemessagepump.pipelines
+namespace nsimplemessagepump.pipeline
 {
     class NotificationPipeline : IPipeline
     {
         private readonly IMessagePump _pump;
-        private readonly LoadContext _load;
+        private readonly LoadContextModel _load;
         private readonly ProcessNotification _process;
 
-        public NotificationPipeline(IMessagePump pump, LoadContext load, ProcessNotification process) {
+        public NotificationPipeline(IMessagePump pump, LoadContextModel load, ProcessNotification process) {
             _pump = pump;
             _load = load;
             _process = process;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using nsimpleeventstore;
 using nsimplemessagepump.messagecontext;
-using nsimplemessagepump.pipelines;
+using nsimplemessagepump.pipeline;
 using Xunit;
 
 namespace nsimplemessagepump.tests
@@ -15,7 +15,7 @@ namespace nsimplemessagepump.tests
             public string Parameter;
         }
 
-        class MyCommandCtx : IMessageContext
+        class MyCommandCtx : IMessageContextModel
         {
             public string Value;
         }
@@ -64,7 +64,7 @@ namespace nsimplemessagepump.tests
             Assert.Equal(4, es.Events.Count);
             
 
-            (CommandStatus, Event[], string) Process_without_notifications(IMessage msg, IMessageContext ctx, string version)
+            (CommandStatus, Event[], string) Process_without_notifications(IMessage msg, IMessageContextModel ctx, string version)
             {
                 var value = (msg as MyCommand).Parameter + (ctx as MyCommandCtx).Value;
                 return (new Success(), new[] {
@@ -73,13 +73,13 @@ namespace nsimplemessagepump.tests
                 }, version);
             }
             
-            (CommandStatus, Event[], string, Notification[]) Process_with_notifications(IMessage msg, IMessageContext ctx, string version)
+            (CommandStatus, Event[], string, Notification[]) Process_with_notifications(IMessage msg, IMessageContextModel ctx, string version)
             {
                 var r = Process_without_notifications(msg, ctx, version);
                 return (r.Item1, r.Item2, r.Item3, new[]{new MyNotification{Original = (msg as MyCommand).Parameter}});
             }
 
-            (IMessageContext Ctx, string Version) Load(IMessage input)
+            (IMessageContextModel Ctx, string Version) Load(IMessage input)
             {
                 return (new MyCommandCtx {Value = "45"}, "");
             }

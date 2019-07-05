@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using nsimpleeventstore;
 using nsimplemessagepump.messagecontext;
-using nsimplemessagepump.pipelines;
+using nsimplemessagepump.pipeline;
 using Xunit;
 
 namespace nsimplemessagepump.tests
@@ -24,7 +24,7 @@ namespace nsimplemessagepump.tests
             public string Parameter;
         }
 
-        class MyNotificationCtx : IMessageContext {
+        class MyNotificationCtx : IMessageContextModel {
             public string Value;
         }
         
@@ -45,11 +45,11 @@ namespace nsimplemessagepump.tests
             Assert.Equal(":foo", (pump.Commands[1] as YourCommand).Parameter);
 
 
-            (IMessageContext Ctx, string Version) loadContext(IMessage msg) {
+            (IMessageContextModel Ctx, string Version) loadContext(IMessage msg) {
                 return (new MyNotificationCtx() {Value = "foo"}, "");
             }
 
-            Command[] processNotification(IMessage msg, IMessageContext ctx)
+            Command[] processNotification(IMessage msg, IMessageContextModel ctx)
             {
                 var prefix = (msg as MyNotification).Prefix;
                 var value = (ctx as MyNotificationCtx).Value;
@@ -63,10 +63,10 @@ namespace nsimplemessagepump.tests
         {
             public List<Command> Commands = new List<Command>();
             
-            public void Register<TMessage>(LoadContext load, Func<IMessage, IMessageContext, string, (CommandStatus, Event[], string)> processCommand, UpdateContext update) {}
-            public void Register<TMessage>(LoadContext load, ProcessCommand processCommand, UpdateContext update){}
-            public void Register<TMessage>(LoadContext load, ProcessQuery process){}
-            public void Register<TMessage>(LoadContext load, ProcessNotification process){}
+            public void Register<TMessage>(LoadContextModel load, Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> processCommand, UpdateContextModel update) {}
+            public void Register<TMessage>(LoadContextModel load, ProcessCommand processCommand, UpdateContextModel update){}
+            public void Register<TMessage>(LoadContextModel load, ProcessQuery process, UpdateContextModel update){}
+            public void Register<TMessage>(LoadContextModel load, ProcessNotification process, UpdateContextModel update){}
 
             public (Response Msg, Notification[] Notifications) Handle(IIncoming inputMessage){
                 Commands.Add((Command)inputMessage);
