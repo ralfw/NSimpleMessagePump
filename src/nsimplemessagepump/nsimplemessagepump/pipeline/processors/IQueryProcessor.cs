@@ -1,6 +1,6 @@
 using nsimplemessagepump.messagecontext;
 
-namespace nsimplemessagepump.pipeline
+namespace nsimplemessagepump.pipeline.processors
 {
     public delegate QueryResult ProcessQuery(IMessage msg, IMessageContextModel ctx);
 

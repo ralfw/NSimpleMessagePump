@@ -4,6 +4,7 @@ using System.Linq;
 using nsimpleeventstore;
 using nsimplemessagepump.messagecontext;
 using nsimplemessagepump.pipeline;
+using nsimplemessagepump.pipeline.processors;
 using Xunit;
 
 namespace nsimplemessagepump.tests

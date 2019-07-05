@@ -1,6 +1,6 @@
 using nsimplemessagepump.messagecontext;
 
-namespace nsimplemessagepump.pipeline
+namespace nsimplemessagepump.pipeline.processors
 {
     public delegate Command[] ProcessNotification(IMessage msg, IMessageContextModel ctx);
 

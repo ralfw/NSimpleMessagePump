@@ -1,5 +1,6 @@
 using System;
 using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.pipeline.processors;
 
 namespace nsimplemessagepump.pipeline
 {

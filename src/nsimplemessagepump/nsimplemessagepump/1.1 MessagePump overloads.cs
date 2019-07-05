@@ -2,6 +2,7 @@ using System;
 using nsimpleeventstore;
 using nsimplemessagepump.messagecontext;
 using nsimplemessagepump.pipeline;
+using nsimplemessagepump.pipeline.processors;
 
 namespace nsimplemessagepump
 {
