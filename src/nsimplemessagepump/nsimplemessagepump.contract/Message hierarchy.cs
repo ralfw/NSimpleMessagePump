@@ -1,4 +1,4 @@
-namespace nsimplemessagepump
+namespace nsimplemessagepump.contract
 {
     public interface IMessage {}
     public interface IIncoming : IMessage {}

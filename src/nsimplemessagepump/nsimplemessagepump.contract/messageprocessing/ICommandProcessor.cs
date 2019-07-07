@@ -1,7 +1,7 @@
 using nsimpleeventstore;
-using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.contract.messagecontext;
 
-namespace nsimplemessagepump.pipeline.processors
+namespace nsimplemessagepump.contract.messageprocessing
 {
     public delegate (CommandStatus,Event[],string,Notification[]) ProcessCommand(IMessage msg, IMessageContextModel ctx, string version);
 

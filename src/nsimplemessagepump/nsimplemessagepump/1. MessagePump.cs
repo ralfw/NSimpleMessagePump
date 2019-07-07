@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using nsimpleeventstore;
-using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.contract;
+using nsimplemessagepump.contract.messagecontext;
+using nsimplemessagepump.contract.messageprocessing;
 using nsimplemessagepump.pipeline;
-using nsimplemessagepump.pipeline.processors;
 
 namespace nsimplemessagepump
 {
@@ -18,10 +19,34 @@ namespace nsimplemessagepump
             _broadcast = new EventBroadcast();
         }
 
+        
+        public void Register<TMessage>(IMessageContextModelManager ctxModelManager, Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> processCommand)
+            => Register<TMessage>(ctxModelManager.Load, processCommand, ctxModelManager.Update);
+        public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ProcessCommand processCommand)
+            => Register<TMessage>(ctxModelManager.Load, processCommand, ctxModelManager.Update);
+        public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ICommandProcessor processor)
+            => Register<TMessage>(ctxModelManager.Load, processor.Process, ctxModelManager.Update);        
+        
+        
+        public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ProcessQuery processQuery)
+            => Register<TMessage>(ctxModelManager.Load, processQuery, ctxModelManager.Update);
+        public void Register<TMessage>(IMessageContextModelManager ctxModelManager, IQueryProcessor processor)
+            => Register<TMessage>(ctxModelManager.Load, processor.Process, ctxModelManager.Update);
+        
+        
+        public void Register<TMessage>(IMessageContextModelManager ctxModelManager, ProcessNotification processNotification)
+            => Register<TMessage>(ctxModelManager.Load, processNotification, ctxModelManager.Update);
+        public void Register<TMessage>(IMessageContextModelManager ctxModelManager, INotificationProcessor processor)
+            => Register<TMessage>(ctxModelManager.Load, processor.Process, ctxModelManager.Update);
+        
 
         public void Register<TMessage>(LoadContextModel load, Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> processCommand, UpdateContextModel update) {
-            _broadcast.Subscribe(update);
-            _pipelines[typeof(TMessage)] = new CommandPipeline(_es, load, processCommand, _broadcast.Update);
+            Register<TMessage>(load, 
+                               (msg, ctx, ver) => {
+                                    var (status,events,version) = processCommand(msg, ctx, ver);
+                                    return (status, events, version, new Notification[0]);
+                               }, 
+                               update);
         }
         public void Register<TMessage>(LoadContextModel load, ProcessCommand processCommand, UpdateContextModel update) { 
             _broadcast.Subscribe(update);

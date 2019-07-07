@@ -1,5 +1,6 @@
 using System.Linq;
 using nsimpleeventstore;
+using nsimplemessagepump.contract;
 using nsimplemessagepump.tests.usecase.messages.commands;
 using nsimplemessagepump.tests.usecase.messages.notifications.outgoing;
 using nsimplemessagepump.tests.usecase.messages.queries;

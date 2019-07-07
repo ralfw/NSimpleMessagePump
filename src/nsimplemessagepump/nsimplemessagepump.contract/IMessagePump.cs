@@ -1,9 +1,9 @@
 using System;
 using nsimpleeventstore;
-using nsimplemessagepump.messagecontext;
-using nsimplemessagepump.pipeline.processors;
+using nsimplemessagepump.contract.messagecontext;
+using nsimplemessagepump.contract.messageprocessing;
 
-namespace nsimplemessagepump
+namespace nsimplemessagepump.contract
 {
     public interface IMessagePump
     {

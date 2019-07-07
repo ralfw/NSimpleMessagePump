@@ -1,6 +1,7 @@
 using System.Linq;
-using nsimplemessagepump.messagecontext;
-using nsimplemessagepump.pipeline.processors;
+using nsimplemessagepump.contract;
+using nsimplemessagepump.contract.messagecontext;
+using nsimplemessagepump.contract.messageprocessing;
 using nsimplemessagepump.tests.usecase.messages.queries;
 
 namespace nsimplemessagepump.tests.usecase.pipelines.queries

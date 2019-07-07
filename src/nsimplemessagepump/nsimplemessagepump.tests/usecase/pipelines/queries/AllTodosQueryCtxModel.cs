@@ -1,4 +1,4 @@
-using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.contract.messagecontext;
 
 namespace nsimplemessagepump.tests.usecase.pipelines.queries
 {

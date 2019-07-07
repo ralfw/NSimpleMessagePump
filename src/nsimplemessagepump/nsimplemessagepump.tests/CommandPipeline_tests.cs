@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using nsimpleeventstore;
-using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.contract;
+using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.pipeline;
 using Xunit;
 
@@ -41,46 +42,30 @@ namespace nsimplemessagepump.tests
         {
             Event[] updateEvents = null;
             var es = new MockEventStore();
-            var sut = new CommandPipeline(es, Load, Process_without_notifications, Update);
+            var sut = new CommandPipeline(es, Load, Process_with_notifications, Update);
 
             var cmd = new MyCommand {Parameter = "123"};
             var result = sut.Handle(cmd);
             
             Assert.IsType<Success>(result.Msg);
-            Assert.Empty(result.Notifications);
-
             Assert.Equal(2, es.Events.Count);
             Assert.Equal("54321", (es.Events[0] as MyEvent).Reversed);
             Assert.Equal(5, (es.Events[1] as YourEvent).Count);
             Assert.Equal(2, updateEvents.Length);
-            
-            
-            sut = new CommandPipeline(es, Load, Process_with_notifications, Update);
-            
-            result = sut.Handle(cmd);
-            
-            Assert.Single(result.Notifications);
-            Assert.Equal("123", (result.Notifications[0] as MyNotification).Original);
-            Assert.Equal(4, es.Events.Count);
+            Assert.IsType<MyNotification>(result.Notifications[0]);
             
 
-            (CommandStatus, Event[], string) Process_without_notifications(IMessage msg, IMessageContextModel ctx, string version)
-            {
+            (CommandStatus, Event[], string, Notification[]) Process_with_notifications(IMessage msg, IMessageContextModel ctx, string version) {
                 var value = (msg as MyCommand).Parameter + (ctx as MyCommandCtx).Value;
-                return (new Success(), new[] {
-                    new MyEvent{Reversed = new string(value.Reverse().ToArray())}, 
-                    (Event) new YourEvent{Count = value.Length}
-                }, version);
-            }
-            
-            (CommandStatus, Event[], string, Notification[]) Process_with_notifications(IMessage msg, IMessageContextModel ctx, string version)
-            {
-                var r = Process_without_notifications(msg, ctx, version);
-                return (r.Item1, r.Item2, r.Item3, new[]{new MyNotification{Original = (msg as MyCommand).Parameter}});
+                return (new Success(), 
+                        new[]{
+                                new MyEvent{Reversed = new string(value.Reverse().ToArray())}, 
+                                (Event) new YourEvent{Count = value.Length}}, 
+                        "", 
+                        new[]{new MyNotification{Original = (msg as MyCommand).Parameter}});
             }
 
-            (IMessageContextModel Ctx, string Version) Load(IMessage input)
-            {
+            (IMessageContextModel Ctx, string Version) Load(IMessage input) {
                 return (new MyCommandCtx {Value = "45"}, "");
             }
             

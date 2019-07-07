@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using nsimpleeventstore;
 
-namespace nsimplemessagepump.messagecontext
+namespace nsimplemessagepump.contract.messagecontext
 {
     public delegate void UpdateContextModel(Event[] events, string version, long finalEventNumber);
     

@@ -1,5 +1,6 @@
 using nsimpleeventstore;
-using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.contract;
+using nsimplemessagepump.contract.messagecontext;
 
 namespace nsimplemessagepump.tests.usecase.pipelines.commands
 {

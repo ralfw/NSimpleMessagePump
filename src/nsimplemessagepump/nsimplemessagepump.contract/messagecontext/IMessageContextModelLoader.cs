@@ -1,4 +1,4 @@
-namespace nsimplemessagepump.messagecontext
+namespace nsimplemessagepump.contract.messagecontext
 {
     public delegate (IMessageContextModel Ctx, string Version) LoadContextModel(IMessage input);
     

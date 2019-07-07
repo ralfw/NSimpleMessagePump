@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using nsimpleeventstore;
-using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.contract;
+using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.tests.usecase.events;
 using nsimplemessagepump.tests.usecase.messages.queries;
 

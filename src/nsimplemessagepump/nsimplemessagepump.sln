@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nsimplemessagepump", "nsimp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nsimplemessagepump.tests", "nsimplemessagepump.tests\nsimplemessagepump.tests.csproj", "{FC4055D7-D3CE-4DAF-8C57-0F7BA6BA4084}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nsimplemessagepump.contract", "nsimplemessagepump.contract\nsimplemessagepump.contract.csproj", "{528CA174-E5AB-40E1-AADE-51872D839EAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{FC4055D7-D3CE-4DAF-8C57-0F7BA6BA4084}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC4055D7-D3CE-4DAF-8C57-0F7BA6BA4084}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC4055D7-D3CE-4DAF-8C57-0F7BA6BA4084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{528CA174-E5AB-40E1-AADE-51872D839EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{528CA174-E5AB-40E1-AADE-51872D839EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{528CA174-E5AB-40E1-AADE-51872D839EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{528CA174-E5AB-40E1-AADE-51872D839EAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

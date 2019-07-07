@@ -1,3 +1,5 @@
+using nsimplemessagepump.contract;
+
 namespace nsimplemessagepump.pipeline
 {
     interface IPipeline

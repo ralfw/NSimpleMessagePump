@@ -1,7 +1,8 @@
 using System.Linq;
 using nsimpleeventstore;
-using nsimplemessagepump.messagecontext;
-using nsimplemessagepump.pipeline.processors;
+using nsimplemessagepump.contract;
+using nsimplemessagepump.contract.messagecontext;
+using nsimplemessagepump.contract.messageprocessing;
 using nsimplemessagepump.tests.usecase.events;
 using nsimplemessagepump.tests.usecase.messages.commands;
 using nsimplemessagepump.tests.usecase.messages.notifications.outgoing;

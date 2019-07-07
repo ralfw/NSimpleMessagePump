@@ -3,16 +3,15 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
 
-        <PackageId>NSimpleMessagePump</PackageId>
-        <Description>A very simple framework to try out the Event-Orientation paradigm</Description>
+        <PackageId>NSimpleMessagePump.Contract</PackageId>
+        <Description>Contract for NSimpleMessagePump</Description>
         <Version>1.0.2</Version>
         <Authors>Ralf Westphal</Authors>
         <Company>One Man Think Tank, Hamburg</Company>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NSimpleEventStore" Version="1.0.2" />
-      <PackageReference Include="NSimpleMessagePump.Contract" Version="1.0.2" />
+      <PackageReference Include="NSimpleEventStore.Contract" Version="1.0.2" />
     </ItemGroup>
 
 </Project>

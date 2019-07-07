@@ -1,3 +1,5 @@
+using nsimplemessagepump.contract;
+
 namespace nsimplemessagepump.tests.usecase.messages.queries
 {
     class AllTodosQueryResult : QueryResult {

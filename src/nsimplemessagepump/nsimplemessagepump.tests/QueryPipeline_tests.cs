@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using nsimplemessagepump.messagecontext;
+using nsimplemessagepump.contract;
+using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.pipeline;
 using Xunit;
 
