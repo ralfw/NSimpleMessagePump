@@ -13,14 +13,16 @@ namespace nsimplemessagepump.tests.usecase
     public class Usecase_tests
     {
         [Fact]
-        public void Run()
+        public void Fluent()
         {
             var es = new InMemoryEventstore();
             var sut = new MessagePump(es);
-            
-            sut.Register<AddTodoCmd>(new AddTodoCmdCtxModelManager(), new AddTodoCmdProcessor());
-            sut.Register<CheckTodoCmd>(new CheckTodoCmdCtxModelManager(), new CheckTodoCmdProcessor());
-            sut.Register<AllTodosQuery>(new AllTodosQueryCtxModelManager(), new AllTodosQueryProcessor());
+
+
+            sut.On<AddTodoCmd>().Use(new AddTodoCmdCtxModelManager()).Do(new AddTodoCmdProcessor());
+            sut.On<AllTodosQuery>().Use(new AllTodosQueryCtxModelManager()).Do(new AllTodosQueryProcessor());
+            var checkToDoCtxModelManager = new CheckTodoCmdCtxModelManager();
+            sut.On<CheckTodoCmd>().Load(checkToDoCtxModelManager).Finally(checkToDoCtxModelManager).Do(new CheckTodoCmdProcessor());
 
             
             // add a couple of tasks

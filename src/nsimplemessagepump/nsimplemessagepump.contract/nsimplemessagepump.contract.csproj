@@ -5,7 +5,7 @@
 
         <PackageId>NSimpleMessagePump.Contract</PackageId>
         <Description>Contract for NSimpleMessagePump</Description>
-        <Version>1.0.2</Version>
+        <Version>1.1.0</Version>
         <Authors>Ralf Westphal</Authors>
         <Company>One Man Think Tank, Hamburg</Company>
     </PropertyGroup>
