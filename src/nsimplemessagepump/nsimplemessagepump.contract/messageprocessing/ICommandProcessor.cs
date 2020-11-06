@@ -1,4 +1,4 @@
-using nsimpleeventstore;
+using nsimpleeventstore.contract;
 using nsimplemessagepump.contract.messagecontext;
 
 namespace nsimplemessagepump.contract.messageprocessing

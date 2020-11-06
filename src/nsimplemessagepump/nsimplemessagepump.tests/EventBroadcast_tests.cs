@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using nsimpleeventstore;
+using nsimpleeventstore.contract;
 using Xunit;
 
 namespace nsimplemessagepump.tests
