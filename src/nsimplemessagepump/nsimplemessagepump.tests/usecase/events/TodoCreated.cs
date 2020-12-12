@@ -1,4 +1,4 @@
-using nsimpleeventstore;
+using nsimpleeventstore.contract;
 
 namespace nsimplemessagepump.tests.usecase.events
 {

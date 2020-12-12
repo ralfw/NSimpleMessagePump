@@ -1,5 +1,5 @@
 using System.Linq;
-using nsimpleeventstore;
+using nsimpleeventstore.contract;
 using nsimplemessagepump.contract;
 using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.contract.messageprocessing;

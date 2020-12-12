@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using nsimpleeventstore;
+using nsimpleeventstore.contract;
 using nsimplemessagepump.contract;
 using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.contract.messageprocessing;

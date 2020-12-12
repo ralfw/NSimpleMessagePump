@@ -5,13 +5,13 @@
 
         <PackageId>NSimpleMessagePump.Contract</PackageId>
         <Description>Contract for NSimpleMessagePump</Description>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
         <Authors>Ralf Westphal</Authors>
         <Company>One Man Think Tank, Hamburg</Company>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NSimpleEventStore.Contract" Version="1.0.2" />
+      <PackageReference Include="NSimpleEventStore.Contract" Version="2.1.0" />
     </ItemGroup>
 
 </Project>
