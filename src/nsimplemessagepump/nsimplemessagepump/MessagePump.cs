@@ -45,7 +45,7 @@ namespace nsimplemessagepump
     }
 
 
-    class EventBroadcast
+    public class EventBroadcast
     {
         private readonly HashSet<UpdateContextModel> _subscribers = new HashSet<UpdateContextModel>();
 

@@ -6,7 +6,7 @@ using nsimplemessagepump.contract.messageprocessing;
 
 namespace nsimplemessagepump.pipeline
 {
-    class CommandPipeline : IPipeline
+    public class CommandPipeline : IPipeline
     {
         private readonly IEventstore _es;
         private readonly LoadContextModel _load;

@@ -11,16 +11,16 @@ namespace nsimplemessagepump.tests.usecase.pipelines.commands
     {
         private List<string> _ids = new List<string>();
 
-        public (IMessageContextModel Ctx, string Version) Load(IMessage msg)
-            => (new CheckTodoCmdCtxModel {Ids = _ids.ToArray()}, "");
+        public (IMessageContextModel Ctx, EventId lastEventId) Load(IMessage msg)
+            => (new CheckTodoCmdCtxModel {Ids = _ids.ToArray()}, null);
 
-        public void Update(Event[] events, string version, long finalEventNumber)
+        public void Update(IEvent[] events, EventId lastEventId)
             => _ids = events.Aggregate(_ids, Apply);
             
-        private List<string> Apply(List<string> ids, Event e) {
+        private List<string> Apply(List<string> ids, IEvent e) {
             switch (e) {
                 case TodoCreated cr:
-                    ids.Add(cr.Id);
+                    ids.Add(cr.Id.Value.ToString());
                     break;
                 case TodoChecked ch:
                     ids.Remove(ch.TodoId);

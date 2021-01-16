@@ -1,5 +1,6 @@
 using System.Linq;
 using nsimpleeventstore;
+using nsimpleeventstore.adapters.eventrepositories;
 using nsimplemessagepump.contract;
 using nsimplemessagepump.tests.usecase.messages.commands;
 using nsimplemessagepump.tests.usecase.messages.notifications.outgoing;
@@ -15,7 +16,7 @@ namespace nsimplemessagepump.tests.usecase
         [Fact]
         public void Fluent()
         {
-            var es = new InMemoryEventstore();
+            var es = new Eventstore<InMemoryEventRepository>();
             var sut = new MessagePump(es);
 
 

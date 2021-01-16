@@ -18,7 +18,7 @@ namespace nsimplemessagepump.tests
             sut.Subscribe(Subscribe2);
             sut.Subscribe(Subscribe2);
             
-            sut.Update(new Event[0], "", 0);
+            sut.Update(new Event[0], null);
             
             Assert.Equal(new[]{1,1}, _counters);
         }
@@ -26,13 +26,13 @@ namespace nsimplemessagepump.tests
 
         private int[] _counters;
 
-        void Subscribe1(IEnumerable<Event> events, string version, long finalEventNumber)
+        void Subscribe1(IEvent[] events, EventId lastEventId)
         {
             _counters[0]++;
         }
         
         
-        void Subscribe2(IEnumerable<Event> events, string version, long finalEventNumber)
+        void Subscribe2(IEvent[] events, EventId lastEventId)
         {
             _counters[1]++;
         }

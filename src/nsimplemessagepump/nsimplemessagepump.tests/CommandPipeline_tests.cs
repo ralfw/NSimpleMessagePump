@@ -40,7 +40,7 @@ namespace nsimplemessagepump.tests
         [Fact]
         public void Run()
         {
-            Event[] updateEvents = null;
+            IEvent[] updateEvents = null;
             var es = new MockEventStore();
             var sut = new CommandPipeline(es, Load, Process_with_notifications, Update);
 
@@ -55,21 +55,21 @@ namespace nsimplemessagepump.tests
             Assert.IsType<MyNotification>(result.Notifications[0]);
             
 
-            (CommandStatus, Event[], string, Notification[]) Process_with_notifications(IMessage msg, IMessageContextModel ctx, string version) {
+            (CommandStatus, IEvent[], EventId, Notification[]) Process_with_notifications(IMessage msg, IMessageContextModel ctx, EventId lastEventId) {
                 var value = (msg as MyCommand).Parameter + (ctx as MyCommandCtx).Value;
                 return (new Success(), 
                         new[]{
                                 new MyEvent{Reversed = new string(value.Reverse().ToArray())}, 
                                 (Event) new YourEvent{Count = value.Length}}, 
-                        "", 
+                        null, 
                         new[]{new MyNotification{Original = (msg as MyCommand).Parameter}});
             }
 
-            (IMessageContextModel Ctx, string Version) Load(IMessage input) {
-                return (new MyCommandCtx {Value = "45"}, "");
+            (IMessageContextModel Ctx, EventId lastEventId) Load(IMessage input) {
+                return (new MyCommandCtx {Value = "45"}, null);
             }
             
-            void Update(Event[] events, string version, long finaleventnumber) {
+            void Update(IEvent[] events, EventId lastEventId) {
                 updateEvents = events;
             }
         }
@@ -77,21 +77,19 @@ namespace nsimplemessagepump.tests
 
         class MockEventStore : IEventstore
         {
-            public List<Event> Events = new List<Event>();
+            public List<IEvent> Events = new List<IEvent>();
             
             public void Dispose() {}
-            public (string Version, long FinalEventNumber) Record(Event e, string expectedVersion = "") { throw new NotImplementedException(); }
-            public (string Version, long FinalEventNumber) Record(Event[] events, string expectedVersion = "") {
+         
+            public void Record(EventId expectedLastEventId, params IEvent[] events) {
                 Events.AddRange(events);
-                return (Events.Count.ToString(), Events.Count - 1);
             }
 
-            public (string Version, Event[] Events) Replay(long firstEventNumber = -1) { throw new NotImplementedException(); }
-            public (string Version, Event[] Events) Replay(params Type[] eventTypes) { throw new NotImplementedException(); }
-            public (string Version, Event[] Events) Replay(long firstEventNumber, params Type[] eventTypes) { throw new NotImplementedException(); }
+            public IEnumerable<IEvent> Replay() { throw new NotImplementedException(); }
+            public IEnumerable<IEvent> Replay(EventId startEventId) { throw new NotImplementedException(); }
 
-            public (string Version, long FinalEventNumber) State { get; }
-            public event Action<string, long, Event[]> OnRecorded;
+            public EventId LastEventId { get; }
+            public event Action<IEvent[]> OnRecorded;
         }
     }
 }

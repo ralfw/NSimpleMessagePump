@@ -12,19 +12,19 @@ namespace nsimplemessagepump.tests.usecase.pipelines.queries
     {
         private List<AllTodosQueryCtxModel.Todo> _todos = new List<AllTodosQueryCtxModel.Todo>();
             
-        public (IMessageContextModel Ctx, string Version) Load(IMessage msg) {
+        public (IMessageContextModel Ctx, EventId lastEventId) Load(IMessage msg) {
             var query = msg as AllTodosQuery;
             var relevantTodos = query.ActiveOnly ? _todos.Where(x => !x.Done) : _todos;
-            return (new AllTodosQueryCtxModel {Todos = relevantTodos.ToArray()}, "");
+            return (new AllTodosQueryCtxModel {Todos = relevantTodos.ToArray()}, null);
         }
 
-        public void Update(Event[] events, string version, long finalEventNumber)
+        public void Update(IEvent[] events, EventId lastEventId)
             => _todos = events.Aggregate(_todos, Apply);
 
-        private List<AllTodosQueryCtxModel.Todo> Apply(List<AllTodosQueryCtxModel.Todo> todos, Event e) {
+        private List<AllTodosQueryCtxModel.Todo> Apply(List<AllTodosQueryCtxModel.Todo> todos, IEvent e) {
             switch (e) {
                 case TodoCreated cr:
-                    todos.Add(new AllTodosQueryCtxModel.Todo{Id = cr.Id, Subject = cr.Subject, Done = false});
+                    todos.Add(new AllTodosQueryCtxModel.Todo{Id = cr.Id.Value.ToString(), Subject = cr.Subject, Done = false});
                     break;
                 case TodoChecked ch:
                     todos.First(x => x.Id == ch.TodoId).Done = true;

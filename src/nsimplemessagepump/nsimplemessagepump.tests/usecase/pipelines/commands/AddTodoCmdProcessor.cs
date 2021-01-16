@@ -9,10 +9,10 @@ namespace nsimplemessagepump.tests.usecase.pipelines.commands
 {
     class AddTodoCmdProcessor : ICommandProcessor
     {
-        public (CommandStatus, Event[], string, Notification[]) Process(IMessage msg, IMessageContextModel ctx, string version)
+        public (CommandStatus, IEvent[], EventId, Notification[]) Process(IMessage msg, IMessageContextModel ctx, EventId lastEventId)
             => (new Success(),
                 new Event[] {new TodoCreated {Subject = (msg as AddTodoCmd).Subject}},
-                "",
+                null,
                 new Notification[0]);
     }
 }
