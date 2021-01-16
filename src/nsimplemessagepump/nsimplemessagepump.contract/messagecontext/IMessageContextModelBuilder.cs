@@ -2,9 +2,9 @@ using nsimpleeventstore.contract;
 
 namespace nsimplemessagepump.contract.messagecontext
 {
-    public delegate void UpdateContextModel(Event[] events, string version, long finalEventNumber);
+    public delegate void UpdateContextModel(IEvent[] events, EventId lastEventId);
     
     public interface IMessageContextModelBuilder {
-        void Update(Event[] events, string version, long finalEventNumber);
+        void Update(IEvent[] events, EventId lastEventId);
     }
 }

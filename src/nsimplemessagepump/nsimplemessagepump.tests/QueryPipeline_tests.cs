@@ -1,3 +1,4 @@
+using nsimpleeventstore.contract;
 using nsimplemessagepump.contract;
 using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.pipeline;
@@ -29,8 +30,8 @@ namespace nsimplemessagepump.tests
             Assert.Empty(result.Notifications);
 
 
-            (IMessageContextModel Ctx, string Version) loadContext(IMessage msg) {
-                return (new MyQueryCtx {Value = "foo"}, "");
+            (IMessageContextModel Ctx, EventId lastEventId) loadContext(IMessage msg) {
+                return (new MyQueryCtx {Value = "foo"}, null);
             }
 
             QueryResult processQuery(IMessage msg, IMessageContextModel ctx) {

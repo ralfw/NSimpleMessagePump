@@ -46,8 +46,8 @@ namespace nsimplemessagepump.tests
             Assert.Equal(":foo", (pump.Commands[1] as YourCommand).Parameter);
 
 
-            (IMessageContextModel Ctx, string Version) loadContext(IMessage msg) {
-                return (new MyNotificationCtx() {Value = "foo"}, "");
+            (IMessageContextModel Ctx, EventId lastEventId) loadContext(IMessage msg) {
+                return (new MyNotificationCtx() {Value = "foo"}, null);
             }
 
             Command[] processNotification(IMessage msg, IMessageContextModel ctx)

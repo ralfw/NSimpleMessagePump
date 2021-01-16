@@ -6,7 +6,7 @@ using nsimplemessagepump.contract.messageprocessing;
 
 namespace nsimplemessagepump.pipeline
 {
-    class CommandPipeline : IPipeline
+    public class CommandPipeline : IPipeline
     {
         private readonly IEventstore _es;
         private readonly LoadContextModel _load;
@@ -25,8 +25,8 @@ namespace nsimplemessagepump.pipeline
         public (Response Msg, Notification[] Notifications) Handle(IMessage msg) {
             var (ctx, loadedVersion) = _load(msg);
             var (status, events, expectedVersion, notifications) = _process(msg, ctx, loadedVersion);
-            var (version, finalEventNumber) =_es.Record(events, expectedVersion); //TODO: handle ES version conflict
-            _update(events, version, finalEventNumber);
+            _es.Record(expectedVersion, events); //TODO: handle ES version conflict
+            _update(events, events[events.Length - 1]?.Id);
             return (status, notifications);
         }
     }

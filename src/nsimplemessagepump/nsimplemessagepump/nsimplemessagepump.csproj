@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
 
         <PackageId>NSimpleMessagePump</PackageId>
         <Description>A very simple framework to try out the Event-Orientation paradigm</Description>
@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NSimpleMessagePump.Contract" Version="1.2.0" />
+      <ProjectReference Include="..\nsimplemessagepump.contract\nsimplemessagepump.contract.csproj" />
     </ItemGroup>
 
 </Project>

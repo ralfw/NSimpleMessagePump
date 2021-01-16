@@ -45,14 +45,14 @@ namespace nsimplemessagepump
     }
 
 
-    class EventBroadcast
+    public class EventBroadcast
     {
         private readonly HashSet<UpdateContextModel> _subscribers = new HashSet<UpdateContextModel>();
 
         public void Subscribe(UpdateContextModel update) => _subscribers.Add(update);
 
-        public void Update(Event[] events, string version, long finalEventNumber) {
-            foreach (var sub in _subscribers) sub(events, version, finalEventNumber);
+        public void Update(IEvent[] events, EventId lastEventId) {
+            foreach (var sub in _subscribers) sub(events, lastEventId);
         }
     }
 }

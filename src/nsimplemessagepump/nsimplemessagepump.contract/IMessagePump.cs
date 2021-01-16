@@ -1,5 +1,3 @@
-using System;
-using nsimpleeventstore;
 using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.contract.messageprocessing;
 
