@@ -1,8 +1,10 @@
+using nsimpleeventstore.contract;
+
 namespace nsimplemessagepump.contract.messagecontext
 {
-    public delegate (IMessageContextModel Ctx, string Version) LoadContextModel(IMessage input);
+    public delegate (IMessageContextModel Ctx, EventId lastEventId) LoadContextModel(IMessage input);
     
     public interface IMessageContextModelLoader {
-        (IMessageContextModel Ctx, string Version) Load(IMessage msg);
+        (IMessageContextModel Ctx, EventId lastEventId) Load(IMessage msg);
     }
 }

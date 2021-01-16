@@ -51,8 +51,8 @@ namespace nsimplemessagepump
 
         public void Subscribe(UpdateContextModel update) => _subscribers.Add(update);
 
-        public void Update(Event[] events, string version, long finalEventNumber) {
-            foreach (var sub in _subscribers) sub(events, version, finalEventNumber);
+        public void Update(Event[] events, EventId lastEventId) {
+            foreach (var sub in _subscribers) sub(events, lastEventId);
         }
     }
 }

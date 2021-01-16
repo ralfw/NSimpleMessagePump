@@ -1,6 +1,5 @@
 using System;
 using nsimpleeventstore.contract;
-using nsimplemessagepump.contract;
 using nsimplemessagepump.contract.messagecontext;
 using nsimplemessagepump.contract.messageprocessing;
 
@@ -10,8 +9,8 @@ namespace nsimplemessagepump.contract
     {
         private readonly IMessagePump _messagePump;
         
-        private LoadContextModel _load = msg => (new EmptyContextModel(), "");
-        private UpdateContextModel _update = (events, version, finalEventNumber) => { };
+        private LoadContextModel _load = msg => (new EmptyContextModel(), null);
+        private UpdateContextModel _update = (events, lastEventId) => { };
 
         
         internal MessagePumpFluentRegistration(IMessagePump messagePump) { _messagePump = messagePump; }
@@ -36,12 +35,12 @@ namespace nsimplemessagepump.contract
         }
 
 
-        public void Do(Func<IMessage, IMessageContextModel, string, (CommandStatus, Event[], string)> processCommand)  {
+        public void Do(Func<IMessage, IMessageContextModel, EventId, (CommandStatus, IEvent[], EventId)> processCommand)  {
             _messagePump.Register<TIncomingMessage>(
                 _load,
                 (msg, ctx, ver) => {
-                    var (status,events,version) = processCommand(msg, ctx, ver);
-                    return (status, events, version, new Notification[0]);
+                    var (status,events,lastEventId) = processCommand(msg, ctx, ver);
+                    return (status, events, lastEventId, new Notification[0]);
                 }, 
                 _update);
         }

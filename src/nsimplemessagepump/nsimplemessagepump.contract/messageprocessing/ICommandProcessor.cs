@@ -3,11 +3,11 @@ using nsimplemessagepump.contract.messagecontext;
 
 namespace nsimplemessagepump.contract.messageprocessing
 {
-    public delegate (CommandStatus,Event[],string,Notification[]) ProcessCommand(IMessage msg, IMessageContextModel ctx, string version);
+    public delegate (CommandStatus,IEvent[],EventId,Notification[]) ProcessCommand(IMessage msg, IMessageContextModel ctx, EventId lastEventId);
 
     
     public interface ICommandProcessor
     {
-        (CommandStatus, Event[], string, Notification[]) Process(IMessage msg, IMessageContextModel ctx, string version);
+        (CommandStatus, IEvent[], EventId, Notification[]) Process(IMessage msg, IMessageContextModel ctx, EventId lastEventId);
     }
 }
