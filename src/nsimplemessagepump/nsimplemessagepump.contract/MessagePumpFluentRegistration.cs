@@ -13,7 +13,7 @@ namespace nsimplemessagepump.contract
         private UpdateContextModel _update = (events, lastEventId) => { };
 
         
-        internal MessagePumpFluentRegistration(IMessagePump messagePump) { _messagePump = messagePump; }
+        public MessagePumpFluentRegistration(IMessagePump messagePump) { _messagePump = messagePump; }
         
         
         public MessagePumpFluentRegistration<TIncomingMessage> Use(IMessageContextModelManager ctxModelManager) {
